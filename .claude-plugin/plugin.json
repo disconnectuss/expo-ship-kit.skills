@@ -1,0 +1,10 @@
+{
+  "name": "expo-ship-kit",
+  "version": "0.1.0",
+  "description": "Ship Expo / React Native apps without surprises: release preflight, EAS Build & Submit, OTA updates, and App Store / Google Play review checks.",
+  "author": { "name": "Fatma Aktas", "url": "https://fatmaaktas.dev/" },
+  "homepage": "https://github.com/<your-github-user>/expo-ship-kit",
+  "repository": "https://github.com/<your-github-user>/expo-ship-kit",
+  "license": "MIT",
+  "keywords": ["expo", "react-native", "eas", "eas-build", "eas-submit", "eas-update", "app-store", "google-play", "release"]
+}

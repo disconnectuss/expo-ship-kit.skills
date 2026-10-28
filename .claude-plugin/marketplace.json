@@ -1,0 +1,11 @@
+{
+  "name": "expo-ship-kit",
+  "owner": { "name": "Fatma Aktas", "url": "https://fatmaaktas.dev/" },
+  "plugins": [
+    {
+      "name": "expo-ship-kit",
+      "source": "./",
+      "description": "Release preflight, EAS Build & Submit, OTA updates and store-review checks for Expo apps."
+    }
+  ]
+}
