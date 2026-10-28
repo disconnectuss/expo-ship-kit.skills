@@ -1,0 +1,2 @@
+{"cli":{"appVersionSource":"remote"},"build":{"production":{"autoIncrement":true},"preview":{"extends":"prod","distribution":"internal"}},
+"submit":{"production":{"android":{"serviceAccountKeyPath":"./play-key.json","rollout":0.1},"ios":{"appleId":"a@b.c"}}}}

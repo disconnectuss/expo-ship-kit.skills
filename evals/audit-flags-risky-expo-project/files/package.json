@@ -1,0 +1,4 @@
+{"name":"bad","dependencies":{"expo":"~57.0.0","expo-camera":"~17.0.0","expo-location":"~19.0.0",
+"@react-native-google-signin/google-signin":"^15.0.0","@supabase/supabase-js":"^2.0.0",
+"@stripe/stripe-react-native":"0.50.0","openai":"^5.0.0","react-native-google-mobile-ads":"^15.0.0",
+"@react-native-firebase/remote-config":"^22.0.0","expo-updates":"~0.30.0"}}

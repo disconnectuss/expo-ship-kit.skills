@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: audit-flags-risky-expo-project
+expected_outcome: |
+  A review-readiness report with a Fix-before-submitting or Blocked verdict that lists the real blockers in this project with concrete fixes.
+context:
+  scaffold_script: place-files.sh

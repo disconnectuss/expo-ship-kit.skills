@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: review-notes-ev-charging-app
+expected_outcome: |
+  Filled review notes following the skill's template, specific to this app.

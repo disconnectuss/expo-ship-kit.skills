@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: ota-hotfix-vs-native-change
+expected_outcome: |
+  Explains that the branch as-is needs a build because react-native-maps is native, and shows how to ship the fix alone as an OTA update safely.

@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: build-submit-diagnoses-play-draft
+expected_outcome: |
+  Explains the draft-app rule and gives the eas.json change plus Play Console steps to finish the first release.

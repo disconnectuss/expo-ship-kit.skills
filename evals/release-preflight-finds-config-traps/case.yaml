@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: release-preflight-finds-config-traps
+expected_outcome: |
+  A release preflight report that catches the gitignored google-services file, the localhost API URL, the missing production channel, and the unbumped version.
+context:
+  scaffold_script: place-files.sh
