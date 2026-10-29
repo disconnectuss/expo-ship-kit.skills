@@ -337,6 +337,7 @@ if (runExpoChecks && !exists(path.join(projectDir, "node_modules", "expo"))) {
   warn("Dependencies", "Skipped expo-doctor / `expo install --check`: dependencies aren't installed.", "Run your package manager's install, then re-run with --run-expo-checks.");
 } else if (runExpoChecks) {
   const npx = (npxArgs, timeout) => spawnSync("npx", npxArgs, { cwd: projectDir, encoding: "utf8", timeout, shell: process.platform === "win32" });
+  // Unpinned on purpose: Expo's docs use @latest, and an old expo-doctor doesn't know newer SDKs.
   const doctor = npx(["--yes", "expo-doctor@latest"], 180_000);
   const outLines = `${doctor.stdout ?? ""}${doctor.stderr ?? ""}`.trim().split("\n");
   const problems = outLines.filter((l) => /✖|✗|×|fail|error|mismatch|should/i.test(l));
