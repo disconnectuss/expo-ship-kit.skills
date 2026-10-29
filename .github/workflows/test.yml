@@ -4,12 +4,17 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    # Weekly, so the rules-freshness test fails even when nobody pushes.
+    - cron: "0 6 * * 1"
 
 jobs:
   scripts:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest]
         # The scripts promise Node 18+; test the floor and a current LTS.
         node: [18, 22]
     steps:
