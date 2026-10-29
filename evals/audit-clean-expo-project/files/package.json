@@ -1,0 +1,14 @@
+{
+  "name": "split-tip",
+  "version": "1.2.0",
+  "private": true,
+  "main": "index.ts",
+  "dependencies": {
+    "@sentry/react-native": "~8.28.0",
+    "expo": "~58.0.0",
+    "expo-camera": "~58.0.14",
+    "expo-updates": "~58.0.19",
+    "react": "19.3.0",
+    "react-native": "0.88.1"
+  }
+}

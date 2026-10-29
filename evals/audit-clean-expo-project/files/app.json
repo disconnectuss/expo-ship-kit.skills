@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Split Tip",
+    "slug": "split-tip",
+    "version": "1.2.0",
+    "icon": "./assets/icon.png",
+    "scheme": "splittip",
+    "runtimeVersion": { "policy": "fingerprint" },
+    "updates": { "url": "https://u.expo.dev/0f9c2c5e-6b1d-4c8e-9a3e-2d7f5b8a1c4e" },
+    "extra": { "eas": { "projectId": "0f9c2c5e-6b1d-4c8e-9a3e-2d7f5b8a1c4e" } },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Scan a printed receipt so Split Tip can read the total and split it for you.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ]
+    ],
+    "ios": {
+      "bundleIdentifier": "dev.example.splittip",
+      "supportsTablet": false,
+      "config": { "usesNonExemptEncryption": false },
+      "privacyManifests": {
+        "NSPrivacyAccessedAPITypes": [
+          { "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults", "NSPrivacyAccessedAPITypeReasons": ["CA92.1"] }
+        ]
+      }
+    },
+    "android": { "package": "dev.example.splittip", "permissions": ["CAMERA"] }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "cli": { "version": ">= 16.0.0", "appVersionSource": "remote" },
+  "build": {
+    "development": { "developmentClient": true, "distribution": "internal", "environment": "development", "channel": "development" },
+    "preview": { "distribution": "internal", "environment": "preview", "channel": "preview" },
+    "production": { "environment": "production", "channel": "production", "autoIncrement": true }
+  },
+  "submit": {
+    "production": {
+      "ios": { "ascAppId": "1234567890" },
+      "android": { "track": "production", "releaseStatus": "inProgress", "rollout": 0.1 }
+    }
+  }
+}
