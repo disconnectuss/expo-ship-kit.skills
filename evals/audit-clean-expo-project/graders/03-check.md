@@ -4,4 +4,4 @@ focus: trace
 weight: 1
 ---
 
-Any remaining items are framed as manual pre-submission checks (for example screenshots, privacy labels / Data safety form, or testing the camera flow on a release build), not as rejections.
+Every remaining item is presented as an optional fix or a manual pre-submission check (for example privacy labels / Data safety form, screenshots, or testing on a release build); none of them is listed as a blocker or a likely rejection.

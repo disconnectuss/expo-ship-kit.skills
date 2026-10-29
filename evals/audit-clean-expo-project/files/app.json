@@ -12,7 +12,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Scan a printed receipt so Split Tip can read the total and split it for you.",
+          "cameraPermission": "Take a photo of the receipt to attach it to the bill you are splitting.",
           "microphonePermission": false,
           "recordAudioAndroid": false
         }
@@ -24,7 +24,9 @@
       "config": { "usesNonExemptEncryption": false },
       "privacyManifests": {
         "NSPrivacyAccessedAPITypes": [
-          { "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults", "NSPrivacyAccessedAPITypeReasons": ["CA92.1"] }
+          { "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryFileTimestamp", "NSPrivacyAccessedAPITypeReasons": ["C617.1"] },
+          { "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults", "NSPrivacyAccessedAPITypeReasons": ["CA92.1"] },
+          { "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategorySystemBootTime", "NSPrivacyAccessedAPITypeReasons": ["35F9.1"] }
         ]
       }
     },
