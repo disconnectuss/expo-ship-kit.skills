@@ -18,7 +18,7 @@ blockers — so they work in CI as well as inside an agent.
 **Claude Code (plugin):**
 
 ```text
-/plugin marketplace add <your-github-user>/expo-ship-kit
+/plugin marketplace add disconnectuss/expo-ship-kit.skills
 /plugin install expo-ship-kit@expo-ship-kit
 ```
 
@@ -28,7 +28,7 @@ when relevant.
 **Any agent that reads SKILL.md** (Codex CLI, Cursor, Gemini CLI, Claude Code without plugins…):
 
 ```bash
-npx skills add <your-github-user>/expo-ship-kit
+npx skills add disconnectuss/expo-ship-kit.skills
 ```
 
 or copy a folder from `skills/` into your agent's skills directory (e.g. `~/.claude/skills/`).

@@ -1,5 +1,6 @@
 {
   "name": "expo-ship-kit",
+  "description": "Claude Code skills for shipping Expo / React Native apps to the App Store and Google Play.",
   "owner": { "name": "Fatma Aktas", "url": "https://fatmaaktas.dev/" },
   "plugins": [
     {
