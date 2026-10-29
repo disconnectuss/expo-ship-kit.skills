@@ -6,7 +6,7 @@
 //
 // Usage:
 //   node ota-or-build.mjs [--base <ref>] [--head <ref>] [--project <dir>] [--json]
-//   --base defaults to the latest tag reachable from HEAD, else origin/main, else HEAD~1.
+//   --base defaults to the latest tag reachable from HEAD; with no tags, pass it explicitly.
 //   --head defaults to the working tree (uncommitted changes included).
 // Exit codes: 0 = OTA is fine, 1 = needs a build, 3 = unsure (verify with fingerprint), 2 = could not run.
 
@@ -35,9 +35,8 @@ if (git("rev-parse", "--is-inside-work-tree")?.trim() !== "true") fail("Not a gi
 
 const head = opt("--head");
 let base = opt("--base");
-if (!base) {
-  base = git("describe", "--tags", "--abbrev=0")?.trim() || (git("rev-parse", "--verify", "origin/main") ? "origin/main" : "HEAD~1");
-}
+// Guessing origin/main or HEAD~1 could hide a native change that is already merged but not in the store build.
+base ??= git("describe", "--tags", "--abbrev=0")?.trim() || fail("No git tag found. Pass --base <commit or tag the current store build was made from>.");
 if (!git("rev-parse", "--verify", base)) fail(`Unknown base ref "${base}".`);
 
 // Paths are relative to the git root; map project-relative names.
