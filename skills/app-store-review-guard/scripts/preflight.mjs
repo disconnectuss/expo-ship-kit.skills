@@ -301,6 +301,12 @@ if (shipsIos) {
 }
 
 // ---------- privacy manifest ----------
+// What React Native core itself declares (react-native-community/template PrivacyInfo.xcprivacy).
+const RN_CORE_PRIVACY_REASONS = {
+  NSPrivacyAccessedAPICategoryFileTimestamp: "C617.1",
+  NSPrivacyAccessedAPICategoryUserDefaults: "CA92.1",
+  NSPrivacyAccessedAPICategorySystemBootTime: "35F9.1",
+};
 if (shipsIos) {
   const pm = ios.privacyManifests;
   if (!pm)
@@ -311,6 +317,11 @@ if (shipsIos) {
       if (!t.NSPrivacyAccessedAPITypeReasons?.length)
         err("ios", "Privacy manifest", `${t.NSPrivacyAccessedAPIType} has no reasons.`, "Add at least one approved reason code.");
     }
+    const declared = new Set((pm.NSPrivacyAccessedAPITypes ?? []).map((t) => t.NSPrivacyAccessedAPIType));
+    const missing = Object.entries(RN_CORE_PRIVACY_REASONS).filter(([type]) => !declared.has(type));
+    if (missing.length)
+      warn("ios", "Privacy manifest", `Missing API categories React Native core uses: ${missing.map(([type]) => type).join(", ")}.`,
+        `Add them with React Native's own reasons (${missing.map(([type, reason]) => `${type.replace("NSPrivacyAccessedAPICategory", "")} ${reason}`).join(", ")}), plus any your other libraries declare.`);
     if (pm.NSPrivacyTracking === true && !(pm.NSPrivacyTrackingDomains?.length))
       warn("ios", "Privacy manifest", "NSPrivacyTracking is true but NSPrivacyTrackingDomains is empty.", "List the tracking domains your SDKs contact.");
   }
