@@ -50,7 +50,7 @@ Run them from your Expo project root (or pass `--project <dir>`).
 ## Freshness
 
 Store rules and EAS behaviour change several times a year. Everything here was checked on
-**28 Oct 2026** against Apple's App Review Guidelines (16 Oct 2026) and upcoming requirements, Google
+**29 Oct 2026** against Apple's App Review Guidelines (16 Oct 2026) and upcoming requirements, Google
 Play Console Help, Expo SDK 58 and the EAS docs. Each `SKILL.md` carries `metadata.rules-checked-on`.
 PRs that update a rule should cite the official source and bump that date.
 

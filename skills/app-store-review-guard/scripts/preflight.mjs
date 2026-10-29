@@ -12,7 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
 
-const RULES_CHECKED_ON = "2026-10-28";
+const RULES_CHECKED_ON = "2026-10-29";
 const MIN_ANDROID_TARGET_SDK = 36; // Google Play, new apps + updates, since 2026-08-31
 
 // ---------- args ----------
@@ -215,7 +215,8 @@ if (!eas) {
       const scene = plugin(config, "expo-build-properties")?.options?.ios?.enableSceneSupport;
       if (!scene)
         warn("ios", "iOS 27 launch", `ios.image "latest" is Xcode 27, but Expo SDK ${expoMajor} needs scene support for apps built with the iOS 27 SDK.`,
-          'Use the default `auto` image (remove ios.image) or `sdk-' + expoMajor + '`, or enable expo-build-properties ios.enableSceneSupport.');
+          "Use the default `auto` image (remove ios.image) or `sdk-" + expoMajor + "`" +
+            (expoMajor === 57 ? ", or on expo@57.0.23+ enable expo-build-properties ios.enableSceneSupport." : ", or upgrade to Expo SDK 58."));
     }
   }
 }
@@ -444,7 +445,7 @@ if (shipsAndroid) {
       "Remove the override or raise it, and upgrade the Expo SDK if needed.");
   else if (target === undefined)
     info("android", "Target API level", `targetSdkVersion comes from Expo SDK ${expoMajor ?? "?"} defaults.`,
-      `Confirm it's ≥ ${MIN_ANDROID_TARGET_SDK}: \`npx expo prebuild -p android\` then check android/build.gradle, or check the bundle in Play Console.`);
+      `Confirm it's ≥ ${MIN_ANDROID_TARGET_SDK}: Expo SDK 56–58 default to 36; otherwise check android/gradle.properties after \`npx expo prebuild -p android\`, or the bundle in Play Console.`);
 
   const SENSITIVE = {
     "ACCESS_BACKGROUND_LOCATION": "needs a Play Console declaration + video and a prominent disclosure",

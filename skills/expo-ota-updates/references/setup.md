@@ -1,6 +1,6 @@
 # EAS Update set-up and troubleshooting
 
-Checked 2026-10-28 against Expo docs (expo-updates reference, runtime versions, environment
+Checked 2026-10-29 against Expo docs (expo-updates reference, runtime versions, environment
 variables, rollouts, rollbacks) and Expo SDK 58.
 
 ## Minimal set-up

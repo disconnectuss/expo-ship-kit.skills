@@ -1,6 +1,6 @@
 # Submitting with EAS Submit
 
-Checked 2026-10-28 against Expo's EAS Submit docs.
+Checked 2026-10-29 against Expo's EAS Submit docs.
 
 ## iOS → App Store Connect / TestFlight
 
@@ -36,11 +36,9 @@ same `android.package`; a Google Cloud service account with the Google Play Andr
 enabled, invited in Play Console → Users and permissions with release permissions for the app. Upload
 its JSON key with `eas credentials -p android` (or `serviceAccountKeyPath`, never committed).
 
-**First submission**: Expo's docs disagree slightly here — the EAS Submit page says `eas submit -p
-android` creates the first release on the internal testing track, while the CI tutorial says the first
-Android release must be uploaded manually. Recommended: try `eas submit` with `"track": "internal"` and
-`"releaseStatus": "draft"`; if that first upload is refused, upload the `.aab` (downloadable from the
-build page) by hand to Internal testing, then automate everything after it.
+**First submission**: `eas submit -p android` can create the first release itself (on the internal
+testing track); uploading the first `.aab` by hand is no longer required. Create the app in Play
+Console and finish its set-up first. Set `"releaseStatus": "draft"` to upload without rolling out.
 
 The app stays a **draft** until the store listing, content rating, target audience, Data safety and
 App access sections are done, and Google only accepts **draft releases on a draft app** — set

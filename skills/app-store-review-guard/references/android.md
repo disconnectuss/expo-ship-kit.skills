@@ -16,8 +16,9 @@ that, updates below API 36 are refused at upload.
 
 Expo angle: the target SDK comes from the Expo SDK's defaults or `expo-build-properties`
 (`android.targetSdkVersion`). A manual override below 36 is a blocker. To confirm the real value, run
-`npx expo prebuild --platform android` locally and read `android/build.gradle`, or check the uploaded
-bundle in Play Console. Expect Google to require API 37 around August 2027.
+check the Expo SDK's default (SDK 56–58 target 36), any `android.targetSdkVersion` in
+`android/gradle.properties` after `npx expo prebuild --platform android`, or the uploaded bundle in
+Play Console. Expect Google to require API 37 around August 2027.
 
 ## 2. Closed testing for new personal accounts
 
@@ -31,9 +32,9 @@ bundle in Play Console. Expect Google to require API 37 around August 2027.
 
 ## 2b. First upload
 
-- Create the app in Play Console first. Try `eas submit -p android` with `track: internal` and
-  `releaseStatus: draft`; if Google refuses that first upload, upload the `.aab` by hand to Internal
-  testing and automate from then on (Expo's docs differ on whether the very first automated upload works). The app stays a draft until the store
+- Create the app in Play Console first, then `eas submit -p android` with `track: internal` (add
+  `releaseStatus: draft` to upload without rolling out). A manual `.aab` upload to Internal testing is
+  only a fallback if Google refuses the automated one. The app stays a draft until the store
   listing, content rating, Data safety and App access sections are complete. Details: `eas-build-submit`.
 - Submit an `.aab`, not an `.apk`.
 - `android.package` can never change after that first upload.

@@ -5,7 +5,7 @@ Workflows live in `.eas/workflows/*.yml` and run on EAS. Pre-packaged job types 
 Hosting deploys; anything else is a custom job with `steps`. Run any workflow manually with
 `eas workflow:run <file>`.
 
-Job keys below match Expo's docs as of 2026-10-28; the schema evolves, so check the workflow syntax
+Job keys below match Expo's docs as of 2026-10-29; the schema evolves, so check the workflow syntax
 reference if a key is rejected.
 
 ## Release on push to main
@@ -43,7 +43,7 @@ account key for Android, both set up once with `eas credentials`.
 
 ## Update if possible, build only when native code changed
 
-From Expo's CI tutorial (`.eas/workflows/production.yml`, verified 2026-10-28). The `fingerprint` job
+From Expo's EAS Workflows example "Deploy to production" (`.eas/workflows/deploy-to-production.yml`, verified 2026-10-29). The `fingerprint` job
 hashes the native runtime; `get-build` looks for an existing build with that hash. If one exists, only
 JS changed and an OTA update is enough; otherwise build and submit.
 
@@ -117,4 +117,4 @@ This pattern pairs with `runtimeVersion: { "policy": "fingerprint" }` — see `e
 
 If the team prefers GitHub Actions: `expo/expo-github-action` sets up EAS CLI with an `EXPO_TOKEN`
 (robot user access token) secret, then run `eas build --non-interactive --no-wait` /
-`eas update --auto --non-interactive`.
+`eas update --auto --environment production --non-interactive`.

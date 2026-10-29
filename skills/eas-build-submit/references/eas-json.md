@@ -1,13 +1,13 @@
 # eas.json — annotated template and key reference
 
-Checked 2026-10-28 against Expo's eas.json reference and app-versions guide.
+Checked 2026-10-29 against Expo's eas.json reference and app-versions guide.
 
 ## Template (adapt, don't paste blindly)
 
 ```jsonc
 {
   "cli": {
-    "version": ">= 16.0.0",            // minimum EAS CLI for everyone on the team / CI
+    "version": ">= 24.9.0",            // minimum EAS CLI for the team / CI (env:set, --force-end-active-rollout)
     "appVersionSource": "remote"        // EAS owns buildNumber/versionCode (recommended)
   },
   "build": {
@@ -54,7 +54,7 @@ Checked 2026-10-28 against Expo's eas.json reference and app-versions guide.
 ```
 
 `eas.json` is committed, so nothing secret goes in it. Secrets live in EAS environment variables
-(`eas env:create --visibility secret`) and EAS-managed credentials.
+(`eas env:set --environment production --visibility secret`) and EAS-managed credentials.
 
 ## Build profile keys
 

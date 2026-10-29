@@ -138,7 +138,7 @@ for (const [label, rel] of fileRefs) {
       envish
         ? dynamic
           ? "If an EAS file environment variable supplies it (e.g. GOOGLE_SERVICES_JSON), make sure app.config resolves process.env.GOOGLE_SERVICES_JSON ?? './google-services.json' and the variable exists in this environment."
-          : "app.json can't read env vars, so this build will fail. Create an EAS file variable (`eas env:create --name GOOGLE_SERVICES_JSON --type file --visibility secret`), move to app.config.js, and set googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? './google-services.json'."
+          : "app.json can't read env vars, so this build will fail. Create an EAS file variable (`eas env:set --name GOOGLE_SERVICES_JSON --type file --visibility secret --environment production`), move to app.config.js, and set googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? './google-services.json'."
         : "Fix the path or add the file.");
   } else if (gitIgnored(rel)) {
     err("Files", `${label} (${rel}) is gitignored, so it won't be uploaded to EAS Build.`,

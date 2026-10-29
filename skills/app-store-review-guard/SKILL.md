@@ -5,7 +5,7 @@ license: MIT
 compatibility: Node.js 18+ for scripts/preflight.mjs. Works best inside the Expo project root.
 metadata:
   version: "0.1.0"
-  rules-checked-on: "2026-10-28"
+  rules-checked-on: "2026-10-29"
   part-of: expo-ship-kit
 ---
 

@@ -60,7 +60,7 @@ const PATTERNS = [
   { id: "pods-incompatible", re: /CocoaPods could not find compatible versions for pod|Unable to find a specification for|required a higher minimum deployment target/i,
     title: "CocoaPods dependency conflict", where: "Install pods",
     cause: "Two libraries need incompatible versions of a pod, a pod needs a higher iOS deployment target, or a library isn't compatible with this Expo SDK.",
-    fixes: ["`npx expo install --fix` and `npx expo-doctor`.", 'Raise the target with expo-build-properties: `["expo-build-properties", { "ios": { "deploymentTarget": "16.4" } }]` (only if the library really needs it).', "Check the failing library's release notes for SDK compatibility."] },
+    fixes: ["`npx expo install --fix` and `npx expo-doctor`.", 'Raise the target with `expo.ios.deploymentTarget: "16.4"` in app config on SDK 56+ (older SDKs: expo-build-properties `ios.deploymentTarget`), only if the library really needs it.', "Check the failing library's release notes for SDK compatibility."] },
   { id: "podfile-invalid", re: /Invalid `Podfile` file|\[!\] .*Podfile/i,
     title: "Podfile error", where: "Install pods",
     cause: "A config plugin wrote invalid Podfile content, or a committed ios/ folder is out of date.",

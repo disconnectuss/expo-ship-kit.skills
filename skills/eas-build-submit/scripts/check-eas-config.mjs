@@ -41,12 +41,12 @@ const ignored = (rel) => isGit && spawnSync("git", ["check-ignore", "-q", rel], 
 
 const KNOWN_BUILD_KEYS = new Set(["extends", "distribution", "channel", "environment", "developmentClient", "autoIncrement", "env", "resourceClass",
   "withoutCredentials", "buildArtifactPaths", "node", "pnpm", "yarn", "bun", "corepack", "cache", "credentialsSource", "ios", "android",
-  "releaseChannel", "prebuildCommand", "config", "image", "autoSubmit"]);
+  "releaseChannel", "prebuildCommand", "config", "image", "autoSubmit", "permissions"]);
 const builds = eas.build ?? {};
 const submits = eas.submit ?? {};
 
 // ---------- cli ----------
-if (!eas.cli?.version) info("cli", "No cli.version constraint.", 'Pin a minimum, e.g. "cli": { "version": ">= 16.0.0" }, so teammates and CI use a compatible EAS CLI.');
+if (!eas.cli?.version) info("cli", "No cli.version constraint.", 'Pin a minimum, e.g. "cli": { "version": ">= 24.9.0" }, so teammates and CI use an EAS CLI that has the commands this kit suggests.');
 if (!eas.cli?.appVersionSource) warn("cli", "No cli.appVersionSource.", 'Set "remote" (recommended) and use autoIncrement on production.');
 
 // ---------- build profiles ----------
@@ -65,7 +65,7 @@ for (const [name, p] of Object.entries(builds)) {
     const secretish = Object.keys(p.env).filter((k) => /SECRET|TOKEN|PASSWORD|PRIVATE|API_KEY/i.test(k));
     if (secretish.length)
       err(where, `env contains secret-looking keys (${secretish.join(", ")}). eas.json is committed and env values here are plain text.`,
-        "Move them to EAS environment variables: `eas env:create --environment production --visibility secret`.");
+        "Move them to EAS environment variables: `eas env:set --environment production --visibility secret`.");
   }
   if (p.ios?.simulator && p.distribution !== "internal" && name === "production") err(where, "Production builds a simulator binary.", "Remove ios.simulator from production.");
   if (/prod/i.test(name) && p.android?.buildType === "apk") err(where, "Production profile builds an APK.", "Google Play needs an .aab (default buildType app-bundle).");

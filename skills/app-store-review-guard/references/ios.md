@@ -18,8 +18,9 @@ Upcoming Requirements page. Guideline numbers are Apple's; the wording below is 
 
 | Requirement | Since | Expo angle |
 |---|---|---|
-| Built with **Xcode 26+ and the iOS 26 SDK** or later | 28 Apr 2026 | Applies to TestFlight uploads too. Leave `ios.image` unset (EAS picks `auto` for your SDK; SDK 54+ gets Xcode 26+). A pinned `sdk-53`-or-older or `xcode-15/16` image fails the upload. `latest` is Xcode 27, which needs Expo SDK 58 or scene support enabled on SDK 57. Expo SDK 58 (Oct 2026) targets the iOS 27 SDK; Apple usually raises the floor each spring, so plan for an iOS 27 SDK requirement around April 2027 and confirm on the Upcoming Requirements page. |
+| Built with **Xcode 26+ and the iOS 26 SDK** or later | 28 Apr 2026 | Applies to TestFlight uploads too. Leave `ios.image` unset (EAS picks `auto` for your SDK; SDK 54+ gets Xcode 26+). A pinned `sdk-53`-or-older or `xcode-15/16` image fails the upload. `latest` is Xcode 27, which needs Expo SDK 58 or scene support enabled on SDK 57 (`expo@57.0.23+`, expo-build-properties `ios.enableSceneSupport`). Expo SDK 58 (Oct 2026) targets the iOS 27 SDK; Apple usually raises the floor each spring, so plan for an iOS 27 SDK requirement around April 2027 and confirm on the Upcoming Requirements page. |
 | **Privacy manifest** reasons for "required reason" APIs (UserDefaults, file timestamps, system boot time, disk space, active keyboard) | 2024, ongoing | React Native links libraries statically, so Apple may not pick up per-library manifests. Declare them in `expo.ios.privacyManifests`. Apple emails missing reasons within minutes of an upload, so a TestFlight upload is the real test. |
+| Apps must target **iOS 13 or later** | 9 Sep 2026 | Can't block an Expo app: Expo's minimum deployment target is 16.4+. |
 | App icon: 1024×1024, no transparency | long-standing | `preflight.mjs` checks the PNG header. |
 
 ## 2. Reviewer access and completeness — 2.1(a), 2.1(b), 2.3.1(a), 2.3.12, 2.5.19
