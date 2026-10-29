@@ -56,10 +56,18 @@ PRs that update a rule should cite the official source and bump that date.
 
 ## Tests
 
-`evals/` holds one or more test cases per skill in the format `claude plugin eval` reads:
+The scripts have deterministic tests against the eval fixtures (no dependencies, runs in CI):
+
+```bash
+node --test tests/scripts.test.mjs
+```
+
+`evals/` holds one or more agent test cases per skill in the format `claude plugin eval` reads,
+including a clean project that must not be flagged:
 
 ```bash
 claude plugin eval . --allow-tools Bash,Write,Edit --scaffold
+claude plugin eval . --allow-tools Bash,Write,Edit --scaffold --tag app-store-review-guard --runs 1
 ```
 
 ## License
