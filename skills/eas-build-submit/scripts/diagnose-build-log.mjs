@@ -8,6 +8,8 @@
 //   pbpaste | node diagnose-build-log.mjs -
 //   node diagnose-build-log.mjs build.log --json
 //
+// Exit codes: 0 = at least one known pattern matched, 3 = nothing matched, 2 = could not read the log.
+//
 // Get a log: download it from the build page on expo.dev, or copy the failed phase's output.
 // The earliest failing phase is usually the real cause; later phases often just echo it.
 
@@ -20,7 +22,13 @@ if (!file) {
   console.error("usage: node diagnose-build-log.mjs <log-file | -> [--json]");
   process.exit(2);
 }
-const log = file === "-" ? fs.readFileSync(0, "utf8") : fs.readFileSync(file, "utf8");
+let log;
+try {
+  log = fs.readFileSync(file === "-" ? 0 : file, "utf8");
+} catch (e) {
+  console.error(`diagnose-build-log: can't read ${file}: ${e.message}`);
+  process.exit(2);
+}
 
 // Each pattern: id, regex, title, where, cause, fixes. Ordered roughly by how specific the match is.
 const PATTERNS = [

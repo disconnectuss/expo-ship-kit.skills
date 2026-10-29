@@ -57,10 +57,10 @@ function loadConfig() {
     if (!j) fail(`Could not read --config ${explicit}`);
     return { config: j.expo ?? j.exp ?? j, source: explicit };
   }
-  // Prefer the resolved config (handles app.config.js/ts and plugins' static config).
+  // Prefer the resolved config (handles app.config.js/ts). Not --type public: it strips ios.config / android.config.
   if (exists(path.join(projectDir, "node_modules", "expo"))) {
     try {
-      const out = execSync("npx --no-install expo config --json --type public", {
+      const out = execSync("npx --no-install expo config --json", {
         cwd: projectDir,
         stdio: ["ignore", "pipe", "ignore"],
         timeout: 60_000,
@@ -139,18 +139,22 @@ function* walk(dir, depth = 0) {
   }
 }
 
+// Read the source tree once; several checks search it.
+let sourceFiles;
 function sourceContains(regex) {
   if (!scanSource) return undefined;
-  let scanned = 0;
-  for (const f of walk(projectDir)) {
-    if (++scanned > 4000) break;
-    try {
-      if (regex.test(fs.readFileSync(f, "utf8"))) return path.relative(projectDir, f);
-    } catch {
-      /* ignore */
+  if (!sourceFiles) {
+    sourceFiles = [];
+    for (const f of walk(projectDir)) {
+      if (sourceFiles.length >= 4000) break;
+      try {
+        sourceFiles.push({ rel: path.relative(projectDir, f), text: fs.readFileSync(f, "utf8") });
+      } catch {
+        /* ignore */
+      }
     }
   }
-  return null;
+  return sourceFiles.find((f) => regex.test(f.text))?.rel ?? null;
 }
 
 // ---------- load ----------
@@ -413,10 +417,12 @@ if (has("react-native-google-mobile-ads")) {
 }
 
 // ---------- ratings (5.6.1) ----------
-if (scanSource && !has("expo-store-review") && !has("react-native-rate") && !has("react-native-in-app-review")) {
+if (scanSource) {
+  // Asking for a specific rating is a violation even when the system review API is used.
   const stars = sourceContains(/\b5[- ]?stars?\b|five stars|5 y[ıi]ld[ıi]z/i);
   if (stars) err("both", "5.6.1 / 3.2.2(x) Ratings", `Text asks for a specific star rating (${stars}).`, "Never ask for a particular rating. Use expo-store-review's requestReview() with neutral wording.");
-  const hit = stars ? undefined : sourceContains(/rate (us|this app)|leave (us )?a review/i);
+  const usesReviewApi = has("expo-store-review") || has("react-native-rate") || has("react-native-in-app-review");
+  const hit = stars || usesReviewApi ? undefined : sourceContains(/rate (us|this app)|leave (us )?a review/i);
   if (hit) warn("both", "5.6.1 Ratings", `Custom rating prompt text found (${hit}).`, "Use expo-store-review (system API). Don't gate or reward ratings.");
 }
 

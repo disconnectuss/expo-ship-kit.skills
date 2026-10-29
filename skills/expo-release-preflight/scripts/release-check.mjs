@@ -62,7 +62,7 @@ function loadConfig() {
     return { config: j.expo ?? j.exp ?? j, source: explicit };
   }
   if (exists(path.join(projectDir, "node_modules", "expo"))) {
-    const out = sh("npx --no-install expo config --json --type public");
+    const out = sh("npx --no-install expo config --json");
     if (out) {
       try {
         const j = JSON.parse(out);
@@ -201,18 +201,15 @@ if (!eas) {
     }
     seen.add(name);
     if (p.extends) {
-      if (!builds[p.extends]) {
-        err("EAS", `Profile "${name}" extends "${p.extends}", which doesn't exist.`);
-        return p;
-      }
+      if (!builds[p.extends]) return p; // reported by the loop below
       const base = resolve(p.extends, seen) ?? {};
       return { ...base, ...p, ios: { ...base.ios, ...p.ios }, android: { ...base.android, ...p.android }, env: { ...base.env, ...p.env } };
     }
     return p;
   };
-  for (const name of Object.keys(builds)) if (name !== profileName) {
-    const p = builds[name];
-    if (p.extends && !builds[p.extends]) err("EAS", `Profile "${name}" extends "${p.extends}", which doesn't exist.`, "Not this build, but every build of that profile will fail.");
+  for (const [name, p] of Object.entries(builds)) {
+    if (p.extends && !builds[p.extends])
+      err("EAS", `Profile "${name}" extends "${p.extends}", which doesn't exist.`, name === profileName ? "Fix the extends name." : "Not this build, but every build of that profile will fail.");
   }
   for (const [name, sp] of Object.entries(eas.submit ?? {})) {
     for (const [k, rel] of [["android.serviceAccountKeyPath", sp.android?.serviceAccountKeyPath], ["ios.ascApiKeyPath", sp.ios?.ascApiKeyPath]]) {
@@ -336,12 +333,16 @@ if (!["@sentry/react-native", "@bugsnag/expo", "@bugsnag/react-native", "@react-
   info("Monitoring", "No crash/error reporting SDK found.", "Add one (Sentry, Crashlytics, expo-observe…) before a release so you see crashes from real devices; upload source maps.");
 
 // ---------- optional: expo-doctor & dependency alignment ----------
-if (runExpoChecks) {
-  const doctor = spawnSync("npx", ["--yes", "expo-doctor@latest"], { cwd: projectDir, encoding: "utf8", timeout: 180_000 });
-  const out = `${doctor.stdout ?? ""}${doctor.stderr ?? ""}`.trim();
+if (runExpoChecks && !exists(path.join(projectDir, "node_modules", "expo"))) {
+  warn("Dependencies", "Skipped expo-doctor / `expo install --check`: dependencies aren't installed.", "Run your package manager's install, then re-run with --run-expo-checks.");
+} else if (runExpoChecks) {
+  const npx = (npxArgs, timeout) => spawnSync("npx", npxArgs, { cwd: projectDir, encoding: "utf8", timeout, shell: process.platform === "win32" });
+  const doctor = npx(["--yes", "expo-doctor@latest"], 180_000);
+  const outLines = `${doctor.stdout ?? ""}${doctor.stderr ?? ""}`.trim().split("\n");
+  const problems = outLines.filter((l) => /✖|✗|×|fail|error|mismatch|should/i.test(l));
   if (doctor.status === 0) info("expo-doctor", "expo-doctor passed.");
-  else (doctor.status == null ? warn : err)("expo-doctor", doctor.status == null ? "expo-doctor could not run (timeout or no network)." : "expo-doctor reported problems:\n" + out.split("\n").filter((l) => /✖|✗|×|fail|error|mismatch|should/i.test(l)).slice(0, 15).join("\n"), "Fix these before building; most are version mismatches fixable with `npx expo install --fix`.");
-  const check = spawnSync("npx", ["--no-install", "expo", "install", "--check"], { cwd: projectDir, encoding: "utf8", timeout: 120_000 });
+  else (doctor.status == null ? warn : err)("expo-doctor", doctor.status == null ? "expo-doctor could not run (timeout or no network)." : "expo-doctor reported problems:\n" + (problems.length ? problems : outLines.slice(-15)).slice(0, 15).join("\n"), "Fix these before building; most are version mismatches fixable with `npx expo install --fix`.");
+  const check = npx(["--no-install", "expo", "install", "--check"], 120_000);
   if (check.status === 0) info("Dependencies", "All Expo-managed packages match the SDK.");
   else if (check.status != null) err("Dependencies", "Packages don't match the Expo SDK:\n" + `${check.stdout ?? ""}${check.stderr ?? ""}`.trim().split("\n").slice(0, 15).join("\n"), "Run `npx expo install --fix`, then test again.");
 } else {
