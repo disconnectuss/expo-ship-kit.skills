@@ -88,6 +88,10 @@ often skip:
 
 Keep fixes concrete: the key in `eas.json`, the `eas env` command, the file to gitignore.
 
+Problems in the profile being built belong to this build, not to "later": a store build without a
+`channel` can never receive EAS Updates, so it goes under "Check before building" (or Blockers if the
+user relies on OTA hotfixes).
+
 ## Things worth explaining when they come up
 
 - **Committed `ios/` and `android/` folders** turn off prebuild on EAS. From then on, editing
@@ -101,8 +105,9 @@ Keep fixes concrete: the key in `eas.json`, the `eas env` command, the file to g
   never leaves EAS (use it for files like `GOOGLE_SERVICES_JSON`). `EXPO_PUBLIC_*` values are inlined
   into the JS bundle and readable by anyone, so they must never hold secrets.
 - **Gitignored files** referenced from app config (a `google-services.json`, an icon) don't get
-  uploaded, and the build fails with a missing-file error. Use a file environment variable and resolve
-  the path in `app.config.js`.
+  uploaded, and the build fails with a missing-file error. Use a file environment variable
+  (`eas env:set --name GOOGLE_SERVICES_JSON --type file --visibility secret --environment production`;
+  `env:create` is deprecated since EAS CLI 21) and resolve the path in `app.config.js`.
 - **Versions**: with `cli.appVersionSource: "remote"` (recommended), EAS owns `buildNumber` /
   `versionCode` and `autoIncrement` bumps them; the user-facing `version` is still yours to bump in app
   config for every store release. `nativeVersion` runtime policy doesn't work with remote versioning.

@@ -107,6 +107,16 @@ Use this structure so the user can act on it line by line:
 <filled template, if relevant>
 ```
 
+How to sort items:
+
+- **Blockers** and **Likely rejections** only hold problems you can see in the project files or the
+  user's description. Anything that depends on a fact you don't have ("if your privacy label says no
+  data is collected…") goes under "Questions that change the verdict" or "Before you press submit".
+- **Verdict**: *Blocked* when an upload or review will certainly fail, *Fix before submitting* when
+  there is a blocker or likely rejection you can fix, *Ready* otherwise. Manual checks that every
+  release needs (privacy labels, Data safety, screenshots, a TestFlight smoke test) don't lower the
+  verdict. A clean project should be called Ready.
+
 Keep fixes concrete: name the `app.json` key, the plugin option, or the screen. "Improve your privacy"
 is not a fix; `ios.infoPlist.NSCameraUsageDescription: "Scan the QR code on your charging station to
 start a session"` is.
