@@ -33,7 +33,7 @@ try {
 // Each pattern: id, regex, title, where, cause, fixes. Ordered roughly by how specific the match is.
 const PATTERNS = [
   // ---------- install / prepare ----------
-  { id: "lockfile-out-of-date", re: /frozen[- ]lockfile|lockfile (is )?(out of date|needs to be updated)|ERR_PNPM_OUTDATED_LOCKFILE|npm ci can only install packages when your package\.json and package-lock\.json/i,
+  { id: "lockfile-out-of-date", re: /frozen[- ]lockfile|lockfile (is )?(out of date|needs to be updated)|ERR_PNPM_OUTDATED_LOCKFILE|`?npm ci`? can only install packages when your package\.json and package-lock\.json/i,
     title: "Lockfile doesn't match package.json", where: "Install dependencies",
     cause: "EAS installs with a frozen lockfile; package.json changed without updating the lockfile (or a different package manager wrote it).",
     fixes: ["Run your package manager's install locally and commit the updated lockfile.", "Keep exactly one lockfile (EAS picks the package manager from it)."] },
