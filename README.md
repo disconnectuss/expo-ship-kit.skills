@@ -90,4 +90,3 @@ Unless noted, each cell is a single run, so read the numbers as a direction, not
 ## License
 
 MIT © Fatma Aktas
-# expo-ship-kit.skills
