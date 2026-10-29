@@ -70,6 +70,23 @@ claude plugin eval . --allow-tools Bash,Write,Edit --scaffold
 claude plugin eval . --allow-tools Bash,Write,Edit --scaffold --tag app-store-review-guard --runs 1
 ```
 
+### Measured results (29 Oct 2026)
+
+Judged by `claude plugin eval` (default haiku judge). These runs had **no Bash tool**, so the agent read
+the skills but couldn't run the scripts. Scores with the scripts are untested so far.
+
+| Case | Without kit | With kit |
+|---|---|---|
+| audit-flags-risky-expo-project | 0.83 | 1.00 |
+| triage-login-services-rejection | 0.33 | 1.00 |
+| ota-hotfix-vs-native-change | 0.67 | 1.00 |
+| build-submit-diagnoses-play-draft | 1.00 | 1.00 |
+| review-notes-ev-charging-app | 1.00 | 1.00 |
+| release-preflight-finds-config-traps | 0.75 | 1.00 (2 runs, after skill fix) |
+| audit-clean-expo-project | 0.00 | 0.78 (3 runs; verdict "Ready" in 3/3) |
+
+Unless noted, each cell is a single run, so read the numbers as a direction, not a benchmark.
+
 ## License
 
 MIT © Fatma Aktas
