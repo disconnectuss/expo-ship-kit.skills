@@ -1,6 +1,6 @@
 {
   "name": "expo-ship-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ship Expo / React Native apps without surprises: release preflight, EAS Build & Submit, OTA updates, and App Store / Google Play review checks.",
   "author": { "name": "Fatma Aktas", "url": "https://fatmaaktas.dev/" },
   "homepage": "https://github.com/disconnectuss/expo-ship-kit.skills",

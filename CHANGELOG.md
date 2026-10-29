@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — 2026-10-30
+
+- `release-check.mjs` and `preflight.mjs` report source paths with `/` on Windows too.
+- README: removed a stray heading.
+
 ## 0.1.0 — 2026-10-29
 
 First release. Rules checked against official sources on 2026-10-29.
