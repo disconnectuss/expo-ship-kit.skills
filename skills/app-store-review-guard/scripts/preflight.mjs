@@ -148,7 +148,7 @@ function sourceContains(regex) {
     for (const f of walk(projectDir)) {
       if (sourceFiles.length >= 4000) break;
       try {
-        sourceFiles.push({ rel: path.relative(projectDir, f), text: fs.readFileSync(f, "utf8") });
+        sourceFiles.push({ rel: path.relative(projectDir, f).split(path.sep).join("/"), text: fs.readFileSync(f, "utf8") });
       } catch {
         /* ignore */
       }

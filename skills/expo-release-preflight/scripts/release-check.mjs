@@ -287,7 +287,8 @@ for (const f of walk(projectDir)) {
   } catch {
     continue;
   }
-  const rel = path.relative(projectDir, f);
+  // Report "/" paths on every OS, like git does.
+  const rel = path.relative(projectDir, f).split(path.sep).join("/");
   for (const m of src.matchAll(/process\.env\.(EXPO_PUBLIC_[A-Z0-9_]+)/g)) envUsed.add(m[1]);
   const lines = src.split("\n");
   lines.forEach((line, i) => {
