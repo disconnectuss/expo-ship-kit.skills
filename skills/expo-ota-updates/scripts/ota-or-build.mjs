@@ -39,9 +39,8 @@ let base = opt("--base");
 base ??= git("describe", "--tags", "--abbrev=0")?.trim() || fail("No git tag found. Pass --base <commit or tag the current store build was made from>.");
 if (!git("rev-parse", "--verify", base)) fail(`Unknown base ref "${base}".`);
 
-// Paths are relative to the git root; map project-relative names.
-const gitRoot = git("rev-parse", "--show-toplevel").trim();
-const prefix = path.relative(gitRoot, projectDir);
+// Paths are relative to the git root; map project-relative names. Git paths always use "/".
+const prefix = git("rev-parse", "--show-prefix").trim().replace(/\/$/, "");
 const P = (rel) => (prefix ? `${prefix}/${rel}` : rel).replace(/\\/g, "/");
 const strip = (p) => (prefix && p.startsWith(prefix + "/") ? p.slice(prefix.length + 1) : p);
 
@@ -151,13 +150,13 @@ if (changed.some((f) => /^app\.config\.(js|ts|mjs|cjs)$/.test(f)))
 const nativeAssetRefs = new Set();
 const cfg = appHead?.expo ?? appHead ?? {};
 for (const v of [cfg.icon, cfg.ios?.icon, cfg.splash?.image, cfg.android?.adaptiveIcon?.foregroundImage, cfg.android?.adaptiveIcon?.monochromeImage, cfg.notification?.icon])
-  if (typeof v === "string") nativeAssetRefs.add(path.normalize(v));
-for (const p of cfg.plugins ?? []) if (Array.isArray(p) && p[1]?.image) nativeAssetRefs.add(path.normalize(p[1].image));
-for (const f of changed) if (nativeAssetRefs.has(path.normalize(f)) || nativeAssetRefs.has(path.normalize("./" + f))) native.push(`Native asset changed: ${f} (icon/splash are baked into the binary)`);
+  if (typeof v === "string") nativeAssetRefs.add(path.posix.normalize(v));
+for (const p of cfg.plugins ?? []) if (Array.isArray(p) && p[1]?.image) nativeAssetRefs.add(path.posix.normalize(p[1].image));
+for (const f of changed) if (nativeAssetRefs.has(path.posix.normalize(f)) || nativeAssetRefs.has(path.posix.normalize("./" + f))) native.push(`Native asset changed: ${f} (icon/splash are baked into the binary)`);
 
 // JS / assets
 const jsFiles = changed.filter((f) => /\.(tsx?|jsx?|json|css)$/.test(f) && !/^(package|app|eas|tsconfig)\.json$/.test(f) && !/^(ios|android)\//.test(f));
-const assetFiles = changed.filter((f) => /\.(png|jpe?g|webp|gif|svg|ttf|otf|mp3|mp4|lottie)$/.test(f) && !nativeAssetRefs.has(path.normalize(f)));
+const assetFiles = changed.filter((f) => /\.(png|jpe?g|webp|gif|svg|ttf|otf|mp3|mp4|lottie)$/.test(f) && !nativeAssetRefs.has(path.posix.normalize(f)));
 if (jsFiles.length) ota.push(`${jsFiles.length} JS/TS file(s) changed`);
 if (assetFiles.length) ota.push(`${assetFiles.length} asset file(s) changed (shipped with the update)`);
 if (changed.includes("eas.json")) unsure.push("eas.json changed — doesn't affect the runtime, but channel/environment changes only apply to new builds");
