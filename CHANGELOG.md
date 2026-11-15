@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.1.2 — 2026-11-15
 
 - Each GitHub release gets one zip per skill, ready to upload to Claude.ai or a skill marketplace.
+- Every `SKILL.md` carries the kit version in `metadata.version`.
+- CI uses Node 24 versions of `actions/checkout` and `actions/setup-node`.
 
 ## 0.1.1 — 2026-10-30
 

@@ -4,7 +4,7 @@ description: Set up, run and debug EAS Build and EAS Submit for Expo / React Nat
 license: MIT
 compatibility: Node.js 18+ for the scripts. EAS CLI (`npm i -g eas-cli`) for the commands it suggests.
 metadata:
-  version: "0.1.0"
+  version: "0.1.2"
   rules-checked-on: "2026-10-29"
   part-of: expo-ship-kit
 ---
