@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Each GitHub release gets one zip per skill, ready to upload to Claude.ai or a skill marketplace.
+
 ## 0.1.1 — 2026-10-30
 
 - `release-check.mjs` and `preflight.mjs` report source paths with `/` on Windows too.

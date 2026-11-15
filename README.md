@@ -33,7 +33,8 @@ npx skills add disconnectuss/expo-ship-kit.skills
 
 or copy a folder from `skills/` into your agent's skills directory (e.g. `~/.claude/skills/`).
 
-**Claude.ai:** zip one skill folder and upload it as a custom skill.
+**Claude.ai and skill marketplaces:** download a skill zip from the [latest release](https://github.com/disconnectuss/expo-ship-kit.skills/releases/latest)
+and upload it as a custom skill, or zip a folder from `skills/` yourself.
 
 ## Run the scripts directly
 
