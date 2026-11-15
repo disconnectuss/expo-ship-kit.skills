@@ -1,0 +1,23 @@
+name: release-assets
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  skill-zips:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # One zip per skill folder: the upload format Claude.ai and skill marketplaces accept.
+      - run: |
+          mkdir dist
+          cd skills
+          for skill in */; do zip -rq "../dist/${skill%/}.zip" "$skill"; done
+      - run: gh release upload "$TAG" dist/*.zip --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
