@@ -11,7 +11,7 @@ jobs:
   skill-zips:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # One zip per skill folder: the upload format Claude.ai and skill marketplaces accept.
       - run: |
           mkdir dist
