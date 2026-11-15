@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- `preflight.mjs` no longer warns about a missing privacy manifest by default: `pod install` merges every pod's
+  manifest and React Native core's reasons into the app's. It still warns when that aggregation is turned off.
+
 ## 0.1.2 — 2026-11-15
 
 - Each GitHub release gets one zip per skill, ready to upload to Claude.ai or a skill marketplace.

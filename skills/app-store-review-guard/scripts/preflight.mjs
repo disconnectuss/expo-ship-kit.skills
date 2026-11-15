@@ -309,17 +309,21 @@ const RN_CORE_PRIVACY_REASONS = {
 };
 if (shipsIos) {
   const pm = ios.privacyManifests;
-  if (!pm)
-    warn("ios", "Privacy manifest", "No `ios.privacyManifests` in config.",
-      "React Native links libraries statically, so declare required-reason APIs (e.g. NSPrivacyAccessedAPICategoryUserDefaults / CA92.1) here. Apple emails ITMS-91053 after upload if any are missing.");
-  else {
+  // On by default: pod install merges every pod's manifest plus React Native core's reasons into the app's.
+  const aggregation =
+    plugin(config, "expo-build-properties")?.options?.ios?.privacyManifestAggregationEnabled !== false &&
+    readJson(path.join(projectDir, "ios", "Podfile.properties.json"))?.["apple.privacyManifestAggregationEnabled"] !== "false";
+  if (!pm && !aggregation)
+    warn("ios", "Privacy manifest", "Privacy manifest aggregation is off and there's no `ios.privacyManifests` in config.",
+      "Declare required-reason APIs (e.g. NSPrivacyAccessedAPICategoryUserDefaults / CA92.1) here, or turn aggregation back on. Apple emails ITMS-91053 after upload if any are missing.");
+  else if (pm) {
     for (const t of pm.NSPrivacyAccessedAPITypes ?? []) {
       if (!t.NSPrivacyAccessedAPITypeReasons?.length)
         err("ios", "Privacy manifest", `${t.NSPrivacyAccessedAPIType} has no reasons.`, "Add at least one approved reason code.");
     }
     const declared = new Set((pm.NSPrivacyAccessedAPITypes ?? []).map((t) => t.NSPrivacyAccessedAPIType));
     const missing = Object.entries(RN_CORE_PRIVACY_REASONS).filter(([type]) => !declared.has(type));
-    if (missing.length)
+    if (missing.length && !aggregation)
       warn("ios", "Privacy manifest", `Missing API categories React Native core uses: ${missing.map(([type]) => type).join(", ")}.`,
         `Add them with React Native's own reasons (${missing.map(([type, reason]) => `${type.replace("NSPrivacyAccessedAPICategory", "")} ${reason}`).join(", ")}), plus any your other libraries declare.`);
     if (pm.NSPrivacyTracking === true && !(pm.NSPrivacyTrackingDomains?.length))

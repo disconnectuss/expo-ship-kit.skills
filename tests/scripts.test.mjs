@@ -191,12 +191,26 @@ test("review guard: permissions, privacy manifest and build image rules", () => 
   const { json } = run("reviewGuard", ["--json", "--config", "config.json", "--no-source-scan"], { cwd: dir });
   const all = json.findings.map((f) => `${f.severity} ${f.rule}: ${f.message} ${f.fix ?? ""}`).join("\n");
   assert.match(all, /error Privacy manifest: NSPrivacyAccessedAPICategoryFileTimestamp has no reasons/);
-  assert.match(all, /warning Privacy manifest: Missing API categories React Native core uses: NSPrivacyAccessedAPICategoryUserDefaults, NSPrivacyAccessedAPICategorySystemBootTime/);
+  assert.doesNotMatch(all, /Missing API categories/, "pod install adds React Native core's reasons");
   assert.match(all, /warning 5\.1\.1\(ii\): expo-camera → cameraPermission looks generic/);
   assert.match(all, /warning Sensitive permission: READ_SMS/);
   assert.doesNotMatch(all, /Sensitive permission: ACCESS_BACKGROUND_LOCATION/, "blocked permissions must not be flagged");
   assert.match(all, /iOS 27 launch: .*SDK 56.*upgrade to Expo SDK 58/s);
   assert.doesNotMatch(all, /enableSceneSupport/, "scene support only exists on SDK 57");
+});
+
+test("review guard: privacy manifest warnings only when aggregation is off", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "expo-ship-kit-"));
+  fs.writeFileSync(path.join(dir, "package.json"), JSON.stringify({ dependencies: { expo: "~58.0.0" } }));
+  const audit = (config) => {
+    fs.writeFileSync(path.join(dir, "config.json"), JSON.stringify({ name: "t", version: "1.0.0", ios: { bundleIdentifier: "t.t" }, ...config }));
+    const { json } = run("reviewGuard", ["--json", "--config", "config.json", "--no-source-scan"], { cwd: dir });
+    return json.findings.filter((f) => f.rule === "Privacy manifest").map((f) => f.message).join("\n");
+  };
+  assert.equal(audit({}), "", "aggregation is on by default");
+  const off = { plugins: [["expo-build-properties", { ios: { privacyManifestAggregationEnabled: false } }]] };
+  assert.match(audit(off), /aggregation is off/);
+  assert.match(audit({ ...off, ios: { bundleIdentifier: "t.t", privacyManifests: { NSPrivacyAccessedAPITypes: [] } } }), /Missing API categories/);
 });
 
 test("rules-checked-on dates agree and are recent", () => {
