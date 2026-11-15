@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.3 — 2026-11-16
 
 - `preflight.mjs` no longer warns about a missing privacy manifest by default: `pod install` merges every pod's
   manifest and React Native core's reasons into the app's. It still warns when that aggregation is turned off.

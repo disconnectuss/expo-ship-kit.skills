@@ -4,7 +4,7 @@ description: Ship JavaScript fixes to Expo / React Native apps over the air with
 license: MIT
 compatibility: Node.js 18+ and git for scripts/ota-or-build.mjs. EAS CLI for the commands.
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
   rules-checked-on: "2026-10-29"
   part-of: expo-ship-kit
 ---
