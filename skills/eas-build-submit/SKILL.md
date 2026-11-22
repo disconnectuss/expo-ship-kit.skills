@@ -4,8 +4,8 @@ description: Set up, run and debug EAS Build and EAS Submit for Expo / React Nat
 license: MIT
 compatibility: Node.js 18+ for the scripts. EAS CLI (`npm i -g eas-cli`) for the commands it suggests.
 metadata:
-  version: "0.1.3"
-  rules-checked-on: "2026-10-29"
+  version: "0.1.4"
+  rules-checked-on: "2026-11-22"
   part-of: expo-ship-kit
 ---
 
@@ -79,4 +79,5 @@ eas workflow:run .eas/workflows/release.yml             # run a workflow manuall
   bundle size first.
 - **Images**: leave `ios.image` / `android.image` unset unless there's a reason; EAS picks the image that
   matches the Expo SDK. `latest` is currently Xcode 27, which needs Expo SDK 58 (or scene support enabled
-  on SDK 57, `expo@57.0.23+`) for the app to launch on iOS 27.
+  on SDK 57: `expo@57.0.23+` plus expo-build-properties `ios.enableSceneSupport`) for the app to launch
+  on iOS 27.

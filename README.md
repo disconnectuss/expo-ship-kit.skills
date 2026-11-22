@@ -59,7 +59,8 @@ Run them from your Expo project root (or pass `--project <dir>`).
 
 Store rules and EAS behaviour change several times a year. Everything here was checked on
 **29 Oct 2026** against Apple's App Review Guidelines (16 Oct 2026) and upcoming requirements, Google
-Play Console Help, Expo SDK 58 and the EAS docs. Each `SKILL.md` carries `metadata.rules-checked-on`.
+Play Console Help, Expo SDK 58 and the EAS docs. The store rules, the latest Expo SDK, EAS CLI's `env`
+commands and EAS build images were re-checked on **22 Nov 2026**. Each `SKILL.md` carries `metadata.rules-checked-on`.
 PRs that update a rule should cite the official source and bump that date.
 
 ## Tests

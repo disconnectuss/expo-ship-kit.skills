@@ -1,6 +1,6 @@
 # Apple App Store — checklist for Expo apps
 
-Checked against the App Review Guidelines page stamped "Last Updated: October 16, 2026" and Apple's
+Checked 2026-11-22 against the App Review Guidelines page stamped "Last Updated: October 16, 2026" and Apple's
 Upcoming Requirements page. Guideline numbers are Apple's; the wording below is a paraphrase.
 
 ## Contents
@@ -22,6 +22,7 @@ Upcoming Requirements page. Guideline numbers are Apple's; the wording below is 
 | **Privacy manifest** reasons for "required reason" APIs (UserDefaults, file timestamps, system boot time, disk space, active keyboard) | 2024, ongoing | `pod install` merges every pod's manifest and React Native core's reasons into the app's `PrivacyInfo.xcprivacy` (on by default; off only if `expo-build-properties` sets `ios.privacyManifestAggregationEnabled: false`). Add `expo.ios.privacyManifests` only for APIs your own native code or non-pod SDKs use. Apple emails missing reasons within minutes of an upload, so a TestFlight upload is the real test. |
 | Apps must target **iOS 13 or later** | 9 Sep 2026 | Can't block an Expo app: Expo's minimum deployment target is 16.4+. |
 | App icon: 1024×1024, no transparency | long-standing | `preflight.mjs` checks the PNG header. |
+| Answer the updated **age rating questions** (new "Shared Location" and "Dating and Relationships" descriptors) | 16 Nov 2026 | Done in App Store Connect, not in the app. The next update can't be submitted until they're answered; apps that share location with other users must say so. |
 
 ## 2. Reviewer access and completeness — 2.1(a), 2.1(b), 2.3.1(a), 2.3.12, 2.5.19
 

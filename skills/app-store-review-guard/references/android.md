@@ -1,6 +1,6 @@
 # Google Play — checklist for Expo apps
 
-Checked against Google Play Console Help and the Android Developers target-API page (October 2026).
+Checked against Google Play Console Help and the Android Developers target-API page (November 2026).
 
 ## 1. Target API level
 
