@@ -63,6 +63,11 @@ a reviewer sees on the device. Read every finding, and don't repeat ones that cl
 
 If you can't run scripts in this environment, read `app.json`/`app.config.*`, `package.json` and
 `eas.json` yourself and apply the same checks listed in `references/ios.md` and `references/android.md`.
+Don't skip the ones the script would have raised as errors, in particular: if `package.json` has an
+account library (`@supabase/supabase-js`, `firebase`, `@react-native-firebase/auth`,
+`@react-native-google-signin/google-signin`, `@clerk/clerk-expo`, `aws-amplify`, `expo-auth-session`…),
+search the source for a delete-account flow; none found is a blocker under Apple 5.1.1(v) and Google's
+User Data policy.
 
 ### 2. Walk the manual checklist
 
