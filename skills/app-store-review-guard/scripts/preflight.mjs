@@ -12,7 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
 
-const RULES_CHECKED_ON = "2026-10-29";
+const RULES_CHECKED_ON = "2026-11-22";
 const MIN_ANDROID_TARGET_SDK = 36; // Google Play, new apps + updates, since 2026-08-31
 
 // ---------- args ----------

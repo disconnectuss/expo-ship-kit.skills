@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.4 — 2026-11-22
+
+Store rules re-checked against official sources on 2026-11-22 (no changes to the Apple guidelines or
+Google Play's target API since 0.1.0).
+
+- `app-store-review-guard`: when the script can't run, the agent still checks for an account-deletion
+  flow whenever an account library is installed.
+- `app-store-review-guard`: Apple's new age rating questions (16 Nov 2026) must be answered before the
+  next update can be submitted.
+- `eas-build-submit`: SDK 57 on the Xcode 27 image also needs `ios.enableSceneSupport`, not just `expo@57.0.23+`.
+- New manual `eval` workflow runs the agent evals in CI; README shows the 22 Nov 2026 results.
+
 ## 0.1.3 — 2026-11-16
 
 - `preflight.mjs` no longer warns about a missing privacy manifest by default: `pod install` merges every pod's
