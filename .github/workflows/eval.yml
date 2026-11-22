@@ -1,0 +1,45 @@
+name: eval
+
+# Manual only: every run spends Anthropic API credit (ANTHROPIC_API_KEY repo secret).
+on:
+  workflow_dispatch:
+    inputs:
+      runs:
+        description: Runs per case
+        default: "1"
+      case:
+        description: Case name glob (empty = all cases)
+        default: ""
+      max_cost_usd:
+        description: Hard cost ceiling for the whole run
+        default: "10"
+
+jobs:
+  plugin-eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      # Claude Code's Bash sandbox on Linux needs bubblewrap and socat.
+      - run: sudo apt-get update && sudo apt-get install -y bubblewrap socat
+      - run: npm install -g @anthropic-ai/claude-code
+      # Scores are the output, so a case below 1.0 should not fail the job.
+      - run: >
+          claude plugin eval .
+          --allow-tools Bash,Write,Edit
+          --scaffold --trust-plugin --no-publish
+          --runs "$RUNS" --max-cost-usd "$MAX_COST" --threshold 0 -j 4
+          ${CASE:+--case "$CASE"}
+          --json evals/results/ci.json
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RUNS: ${{ inputs.runs }}
+          CASE: ${{ inputs.case }}
+          MAX_COST: ${{ inputs.max_cost_usd }}
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: eval-results
+          path: evals/results/
