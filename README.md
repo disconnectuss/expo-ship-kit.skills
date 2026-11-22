@@ -3,6 +3,8 @@
 Four [Agent Skills](https://agentskills.io) that take an Expo / React Native app from "it works on my
 phone" to "it's live in both stores" — and keep it there.
 
+![release-check.mjs flagging a dev-client production profile, a localhost URL and a secret in an EXPO_PUBLIC_ variable](docs/release-preflight.png)
+
 | Skill | Ask it… | What it brings |
 |---|---|---|
 | **expo-release-preflight** | "Cutting the production build tonight — anything that'll bite me?" | `release-check.mjs`: gitignored assets that won't upload, committed `ios/`/`android/` that silently ignore app.json, localhost URLs and leaked keys, EAS environment vs `EXPO_PUBLIC_` usage, versions, channels, runtimeVersion, optional expo-doctor. Release smoke-test checklist. |
