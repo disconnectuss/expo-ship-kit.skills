@@ -22,8 +22,11 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      # Claude Code's Bash sandbox on Linux needs bubblewrap and socat.
-      - run: sudo apt-get update && sudo apt-get install -y bubblewrap socat
+      # Claude Code's Bash sandbox on Linux needs bubblewrap and socat, and Ubuntu 24.04's
+      # AppArmor blocks the unprivileged user namespaces it creates unless this is turned off.
+      - run: |
+          sudo apt-get update && sudo apt-get install -y bubblewrap socat
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - run: npm install -g @anthropic-ai/claude-code
       # Scores are the output, so a case below 1.0 should not fail the job.
       - run: >
