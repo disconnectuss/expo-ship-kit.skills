@@ -1,6 +1,6 @@
 name: eval
 
-# Manual only: every run spends Anthropic API credit (ANTHROPIC_API_KEY repo secret).
+# Manual only: every run uses Claude subscription quota (CLAUDE_CODE_OAUTH_TOKEN from `claude setup-token`).
 on:
   workflow_dispatch:
     inputs:
@@ -34,7 +34,7 @@ jobs:
           ${CASE:+--case "$CASE"}
           --json evals/results/ci.json
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           RUNS: ${{ inputs.runs }}
           CASE: ${{ inputs.case }}
           MAX_COST: ${{ inputs.max_cost_usd }}
