@@ -37,7 +37,7 @@ or copy a folder from `skills/` into your agent's skills directory (e.g. `~/.cla
 and upload it as a custom skill, or zip a folder from `skills/` yourself.
 
 **Agensi (via MCP, free):** [expo-release-preflight](https://www.agensi.io/skills/expo-release-preflight) ·
-[eas-build-submit](https://www.agensi.io/skills/eas-build-submit-doctor) ·
+[eas-build-submit](https://www.agensi.io/skills/eas-build-submit-doctor-for-expo) ·
 [expo-ota-updates](https://www.agensi.io/skills/expo-ota-updates-ship-or-build) ·
 [app-store-review-guard](https://www.agensi.io/skills/app-store-rejection-guard-for-expo)
 
