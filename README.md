@@ -80,26 +80,25 @@ claude plugin eval . --allow-tools Bash,Write,Edit --scaffold
 claude plugin eval . --allow-tools Bash,Write,Edit --scaffold --tag app-store-review-guard --runs 1
 ```
 
-### Measured results
+### Measured results (23 Nov 2026)
 
-Judged by `claude plugin eval` (default haiku judge), one run per cell, so read the numbers as a
-direction, not a benchmark.
+From the [`eval` workflow](.github/workflows/eval.yml) (manual trigger, macOS runner): Claude Sonnet 5.5
+as the agent, default haiku judge, one run per cell, kit 0.1.5. The agent had a working shell and ran
+`preflight.mjs` / `release-check.mjs` in the three cases that ship a project; the other cases are a
+pasted log or a question, so no script applied. The workflow fails if the agent's shell was blocked.
 
-| Case | Without kit | With kit, scripts run (23 Nov, kit 0.1.4, Opus 5.5) | With kit, no shell (22 Nov, Sonnet 5.5) |
-|---|---|---|---|
-| audit-flags-risky-expo-project | 1.00 | 1.00 | 0.83 (missed the icon check) |
-| release-preflight-finds-config-traps | 0.75 | 1.00 | 1.00 |
-| ota-hotfix-vs-native-change | 0.67 | 1.00 | 1.00 |
-| audit-clean-expo-project | 0.33 | 0.67 (verdict "Ready") | 1.00 |
-| build-submit-diagnoses-play-draft | 1.00 | 1.00 | 1.00 |
-| review-notes-ev-charging-app | 1.00 | 1.00 | 1.00 |
-| triage-login-services-rejection | 0.67 | 0.67 | 1.00 |
+| Case | Without kit | With kit |
+|---|---|---|
+| audit-clean-expo-project | 0.33 | 0.67 (verdict "Ready") |
+| audit-flags-risky-expo-project | 0.83 | 1.00 |
+| ota-hotfix-vs-native-change | 0.67 | 1.00 |
+| release-preflight-finds-config-traps | 1.00 | 1.00 |
+| build-submit-diagnoses-play-draft | 1.00 | 1.00 |
+| review-notes-ev-charging-app | 1.00 | 1.00 |
+| triage-login-services-rejection | 1.00 | 1.00 |
 
-"Without kit" is the 23 Nov run. In it, the agent ran `preflight.mjs` and `release-check.mjs` in the
-three cases that ship a project; the other cases are a pasted log or a question, so no script applied.
-The 22 Nov column is from the [`eval` workflow](.github/workflows/eval.yml), where the CI runner
-couldn't start the Bash sandbox. Bash-granting evals also refuse to run on a Mac whose `~/.docker`
-holds symlinks (Docker Desktop's), so the 23 Nov run moved that folder aside while it ran.
+Single runs vary (a local run with Opus 5.5 the same day scored release-preflight 0.75 without the kit
+and triage 0.67 on both arms), so read the numbers as a direction, not a benchmark.
 
 ## License
 
