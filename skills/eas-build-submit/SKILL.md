@@ -74,7 +74,8 @@ eas workflow:run .eas/workflows/release.yml             # run a workflow manuall
 - **Local vs remote credentials**: remote (EAS-managed) is the default and the right choice unless the
   team already manages signing elsewhere. Never commit `.p8`, `.p12`, keystores or service-account JSON.
 - **Auto-submit to production**: fine for iOS (it lands in TestFlight; release is still manual). On
-  Android, prefer `releaseStatus: "draft"` or a staged `inProgress` rollout over `completed` at 100%.
+  Android, prefer `releaseStatus: "draft"` or a staged `inProgress` rollout over `completed` at 100%
+  (Expo's auto-submit page says an explicit `track` needs `completed`; test `draft` once first).
 - **Resource class**: `large` fixes most out-of-memory and timeout failures but costs more; check the
   bundle size first.
 - **Images**: leave `ios.image` / `android.image` unset unless there's a reason; EAS picks the image that

@@ -31,7 +31,8 @@ else.
 - **Config plugin silently not applied**: native folders committed → EAS skips prebuild.
 - **"Works on preview, fails on production"**: different `environment` → different env vars; or
   `buildType`/`developmentClient`/`channel` differences via `extends`.
-- **Monorepos**: Yarn workspaces are best supported; others may need extra config. Make sure the app's
+- **Monorepos**: Bun, npm, pnpm and Yarn workspaces are supported; if pnpm's isolated installs break
+  native libraries, set `nodeLinker: hoisted`. Make sure the app's
   `package.json` is the one EAS resolves and the lockfile is at the workspace root.
 - **Postinstall scripts / patch-package**: run on the worker too; failing patches stop the install phase.
 - **Large native downloads** (maps SDKs, ML models): cache them (`cache.paths`) or use `large`.

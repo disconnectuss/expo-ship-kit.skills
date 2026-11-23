@@ -1,6 +1,6 @@
 # Rollouts and rollbacks
 
-Checked 2026-10-29 against Expo's EAS Update rollouts and rollbacks docs.
+Checked 2026-11-23 against Expo's EAS Update rollouts and rollbacks docs.
 
 ## Per-update rollouts
 

@@ -1,6 +1,6 @@
 # Release checklist (Expo / EAS)
 
-Checked 2026-10-29 against Expo docs (EAS environment variables, app versions, troubleshooting) and
+Checked 2026-11-23 against Expo docs (EAS environment variables, app versions, troubleshooting) and
 Expo SDK 58. Skip sections that don't apply.
 
 ## Contents

@@ -60,7 +60,8 @@ Run them from your Expo project root (or pass `--project <dir>`).
 Store rules and EAS behaviour change several times a year. Everything here was checked on
 **29 Oct 2026** against Apple's App Review Guidelines (16 Oct 2026) and upcoming requirements, Google
 Play Console Help, Expo SDK 58 and the EAS docs. The store rules, the latest Expo SDK, EAS CLI's `env`
-commands and EAS build images were re-checked on **22 Nov 2026**. Each `SKILL.md` carries `metadata.rules-checked-on`.
+commands and EAS build images were re-checked on **22 Nov 2026**, and every Expo / EAS reference on
+**23 Nov 2026**. Each `SKILL.md` carries `metadata.rules-checked-on`.
 PRs that update a rule should cite the official source and bump that date.
 
 ## Tests
@@ -79,25 +80,26 @@ claude plugin eval . --allow-tools Bash,Write,Edit --scaffold
 claude plugin eval . --allow-tools Bash,Write,Edit --scaffold --tag app-store-review-guard --runs 1
 ```
 
-### Measured results (22 Nov 2026)
+### Measured results
 
-From the [`eval` workflow](.github/workflows/eval.yml) (manual trigger): Claude Sonnet 5.5 as the agent,
-default haiku judge, one run per cell. Bash was granted, but the eval's sandbox couldn't start a shell
-on the CI runner, so the agent read the skills without running the scripts. Scores with the scripts
-are still untested.
+Judged by `claude plugin eval` (default haiku judge), one run per cell, so read the numbers as a
+direction, not a benchmark.
 
-| Case | Without kit | With kit |
-|---|---|---|
-| audit-clean-expo-project | 0.33 | 1.00 |
-| ota-hotfix-vs-native-change | 0.67 | 1.00 |
-| release-preflight-finds-config-traps | 0.75 | 1.00 |
-| build-submit-diagnoses-play-draft | 1.00 | 1.00 |
-| review-notes-ev-charging-app | 1.00 | 1.00 |
-| triage-login-services-rejection | 1.00 | 1.00 |
-| audit-flags-risky-expo-project | 1.00 | 0.83 (missed the icon check, which needs the script) |
+| Case | Without kit | With kit, scripts run (23 Nov, kit 0.1.4, Opus 5.5) | With kit, no shell (22 Nov, Sonnet 5.5) |
+|---|---|---|---|
+| audit-flags-risky-expo-project | 1.00 | 1.00 | 0.83 (missed the icon check) |
+| release-preflight-finds-config-traps | 0.75 | 1.00 | 1.00 |
+| ota-hotfix-vs-native-change | 0.67 | 1.00 | 1.00 |
+| audit-clean-expo-project | 0.33 | 0.67 (verdict "Ready") | 1.00 |
+| build-submit-diagnoses-play-draft | 1.00 | 1.00 | 1.00 |
+| review-notes-ev-charging-app | 1.00 | 1.00 | 1.00 |
+| triage-login-services-rejection | 0.67 | 0.67 | 1.00 |
 
-Single runs vary: in two earlier runs the same day, triage scored 0.67 without the kit and 1.00 with
-it. Read the numbers as a direction, not a benchmark.
+"Without kit" is the 23 Nov run. In it, the agent ran `preflight.mjs` and `release-check.mjs` in the
+three cases that ship a project; the other cases are a pasted log or a question, so no script applied.
+The 22 Nov column is from the [`eval` workflow](.github/workflows/eval.yml), where the CI runner
+couldn't start the Bash sandbox. Bash-granting evals also refuse to run on a Mac whose `~/.docker`
+holds symlinks (Docker Desktop's), so the 23 Nov run moved that folder aside while it ran.
 
 ## License
 

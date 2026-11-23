@@ -1,6 +1,6 @@
 # eas.json — annotated template and key reference
 
-Checked 2026-10-29 against Expo's eas.json reference and app-versions guide.
+Checked 2026-11-23 against Expo's eas.json reference and app-versions guide.
 
 ## Template (adapt, don't paste blindly)
 
@@ -45,8 +45,8 @@ Checked 2026-10-29 against Expo's eas.json reference and app-versions guide.
         // ASC API key: upload once with `eas credentials -p ios` instead of paths here
       },
       "android": {
-        "track": "internal",            // internal → closed (alpha/beta) → production
-        "releaseStatus": "draft"        // required until the app's first release is live
+        "track": "internal",            // internal → alpha (closed) → beta (open) → production
+        "releaseStatus": "draft"        // upload without rolling out; complete the release in Play Console
       }
     }
   }
@@ -73,7 +73,7 @@ Checked 2026-10-29 against Expo's eas.json reference and app-versions guide.
 | `credentialsSource` | `remote` (default) or `local` (`credentials.json`). |
 | `withoutCredentials` | Build without signing (rare). |
 | `buildArtifactPaths` | Extra artifacts to keep. |
-| `ios.image` / `android.image` | Leave unset → `auto` image for your SDK. Aliases `sdk-54`…`sdk-58`, `latest`. |
+| `ios.image` / `android.image` | Leave unset → `auto` image for your SDK. Aliases `sdk-<N>` (e.g. `sdk-58`), `latest`. |
 | `ios.simulator` | `true` for a simulator build (internal only). |
 | `ios.buildConfiguration`, `ios.scheme` | `Release` default; scheme required if several exist. |
 | `android.buildType` | `app-bundle` (default, `.aab`) or `apk`. |

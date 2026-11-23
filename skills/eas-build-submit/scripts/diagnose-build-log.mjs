@@ -149,7 +149,7 @@ const PATTERNS = [
   // ---------- submit: Android ----------
   { id: "play-draft-app", re: /Only releases with status draft may be created on draft app/i,
     title: "Play app is still a draft", where: "EAS Submit (Android)",
-    cause: "The app has never been published, so Google only accepts draft releases.",
+    cause: "The app is still a draft in Play Console (store listing / set-up tasks unfinished), so Google only accepts draft releases.",
     fixes: ['Set `"releaseStatus": "draft"` in the Android submit profile, then complete the release in Play Console. Switch back to "completed" after the first release goes live.',
       'First release: use `"track": "internal"`. New personal accounts (created after 13 Nov 2023) can\'t publish to production until a 12-tester / 14-day closed test is done.',
       "Finish store listing, content rating, target audience, Data safety and App access in Play Console. See references/submit.md."] },

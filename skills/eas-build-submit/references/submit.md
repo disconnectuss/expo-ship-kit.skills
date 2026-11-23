@@ -1,6 +1,6 @@
 # Submitting with EAS Submit
 
-Checked 2026-10-29 against Expo's EAS Submit docs.
+Checked 2026-11-23 against Expo's EAS Submit docs.
 
 ## iOS → App Store Connect / TestFlight
 
@@ -38,15 +38,15 @@ its JSON key with `eas credentials -p android` (or `serviceAccountKeyPath`, neve
 
 **First submission**: `eas submit -p android` can create the first release itself (on the internal
 testing track); uploading the first `.aab` by hand is no longer required. Create the app in Play
-Console and finish its set-up first. Set `"releaseStatus": "draft"` to upload without rolling out.
+Console first. Set `"releaseStatus": "draft"` to upload without rolling out.
 
 The app stays a **draft** until the store listing, content rating, target audience, Data safety and
-App access sections are done, and Google only accepts **draft releases on a draft app** — set
-`"releaseStatus": "draft"` until the first release is live.
+App access sections are done; they're required before a release can be promoted to production. If Play
+returns "Only releases with status draft may be created on draft app", use `"releaseStatus": "draft"`.
 
 **New personal developer accounts** (created after 13 Nov 2023): production access requires a closed
 test with 12+ testers opted in for 14 continuous days. Plan the `track` progression: internal →
-closed (`alpha`/`beta` or a named track) → production.
+closed (`alpha` or a named closed track) → production. `beta` is open testing.
 
 **Staged rollout**: `"track": "production", "releaseStatus": "inProgress", "rollout": 0.1` releases to
 10%; raise it in Play Console. `halted` pauses it.

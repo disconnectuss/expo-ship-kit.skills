@@ -33,8 +33,10 @@ Pick the mode from what the user is doing:
 - **Rejection triage**: the user pastes or describes a rejection. Go to `references/rejection-playbook.md`
   first, find the matching guideline, then audit only the related areas. Answer with: the cause in one
   or two sentences, the fix options (recommended first), Expo implementation steps, whether it needs a
-  new native build or can go out as a reply/OTA, the next rejection this fix is likely to trigger, and a
-  short draft reply to App Review.
+  new native build or can go out as a reply/OTA, the next rejection this fix is likely to trigger, a
+  short draft reply to App Review, and where to send it (App Store Connect: select the new build on the
+  rejected version, reply in the App Review message thread, then Submit for Review; Play Console: send
+  the new release through the same track, or appeal from the policy status page).
 - **Review notes**: the user wants the "Notes for Review" / "App access" text. Fill the template at the
   end of this file, then briefly check the claims the notes make (permission strings, background
   modes, login options, region locks) and list any gaps under the notes. Leave `[[...]]` placeholders
