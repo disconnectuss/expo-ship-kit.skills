@@ -4,7 +4,7 @@ description: Pre-submission review audit for Expo / React Native apps going to t
 license: MIT
 compatibility: Node.js 18+ for scripts/preflight.mjs. Works best inside the Expo project root.
 metadata:
-  version: "0.1.4"
+  version: "0.1.5"
   rules-checked-on: "2026-11-22"
   part-of: expo-ship-kit
 ---

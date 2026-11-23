@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.5 — 2026-11-23
+
+Every Expo / EAS reference re-checked against docs.expo.dev and the eas-cli changelog on 2026-11-23.
+
+- `eas-build-submit`: Play tracks corrected (`alpha` is closed testing, `beta` is open). A draft
+  `releaseStatus` is for uploading without rolling out, not a must for the first release; `eas submit`
+  can create the first internal release. A draft app's set-up tasks block promotion to production.
+- `eas-build-submit`: notes Expo's auto-submit rule (an explicit `track` needs `completed`), all
+  workspace managers for monorepos, `sdk-<N>` image aliases, and that the workflow example is adapted.
+- `diagnose-build-log.mjs`: the Play draft-app cause now says the app's set-up is unfinished.
+- `app-store-review-guard`: rejection triage says where to send the fix and the reply (App Store Connect / Play Console).
+- README: first eval run with the scripts actually running (23 Nov 2026).
+
 ## 0.1.4 — 2026-11-22
 
 Store rules re-checked against official sources on 2026-11-22 (no changes to the Apple guidelines or

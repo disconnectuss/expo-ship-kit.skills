@@ -4,7 +4,7 @@ description: Release-readiness check for Expo / React Native apps before cutting
 license: MIT
 compatibility: Node.js 18+ and git for scripts/release-check.mjs. Run inside the Expo project root.
 metadata:
-  version: "0.1.4"
+  version: "0.1.5"
   rules-checked-on: "2026-11-22"
   part-of: expo-ship-kit
 ---
