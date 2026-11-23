@@ -16,17 +16,16 @@ on:
 
 jobs:
   plugin-eval:
-    runs-on: ubuntu-latest
+    # macOS: on Linux runners the eval's Bash sandbox can't nest its user namespace, so the agent
+    # never gets a shell and the scripts never run.
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      # Claude Code's Bash sandbox on Linux needs bubblewrap and socat, and Ubuntu 24.04's
-      # AppArmor blocks the unprivileged user namespaces it creates unless this is turned off.
-      - run: |
-          sudo apt-get update && sudo apt-get install -y bubblewrap socat
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      # Bash-granting evals refuse to start while ~/.docker holds symlinks.
+      - run: if [ -d ~/.docker ]; then mv ~/.docker ~/.docker.off; fi
       - run: npm install -g @anthropic-ai/claude-code
       # Scores are the output, so a case below 1.0 should not fail the job.
       - run: >
@@ -41,6 +40,11 @@ jobs:
           RUNS: ${{ inputs.runs }}
           CASE: ${{ inputs.case }}
           MAX_COST: ${{ inputs.max_cost_usd }}
+      # A run whose shell was blocked still gets graded, so fail loudly instead of reporting no-script scores.
+      - run: >
+          node -e 'const r=require("./evals/results/ci.json");
+          const blocked=JSON.stringify(r).match(/apply-seccomp|nested userns|Bash-granting evaluation cannot run/g)||[];
+          if(blocked.length){console.error(blocked.length+" sandbox errors in agent shells");process.exit(1)}'
       - if: always()
         uses: actions/upload-artifact@v7
         with:
